@@ -65,8 +65,8 @@ class Perceptron:
             result[0] += (y_pred[i] - y_true[i]) * X_input[i][0]
             result[1] += (y_pred[i] - y_true[i]) * X_input[i][1]
             result[2] += (y_pred[i] - y_true[i])
-        for j in range(len(result)):
-            result[j] /= len(y_true)
+        #for j in range(len(result)):
+        #    result[j] /= len(y_true)
         return result
 
     def accuracy(self, X_training, y_training, X_validation, y_validation):
@@ -98,9 +98,9 @@ class Perceptron:
             for X_t, y_t in zip(X_t_batched, y_t_batched):
                 predictions = self.forward(X_t)
                 gradient = self.compute_gradient(X_t, y_t, predictions)
-                self.weights[0] = self.weights[0] - lr * gradient[0]
-                self.weights[1] = self.weights[1] - lr * gradient[1]
-                self.weights[2] = self.weights[2] - lr * gradient[2]
+                self.weights[0] = self.weights[0] - lr * gradient[0] / len(X_training)
+                self.weights[1] = self.weights[1] - lr * gradient[1] / len(X_training)
+                self.weights[2] = self.weights[2] - lr * gradient[2] / len(X_training)
             print("Epoch " + str(epoch) + "\n")
             self.L_1.append(self.compute_loss(y_training, self.forward(X_training)))
             print(self.L_1[epoch])
